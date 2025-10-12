@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}No hay permiso{% endblock %}
+
+{% block content %}
+<div>
+<h2>Acceso denegado</h2>
+<p>No tienes permiso para eliminar esta tarea.</p>
+<a href="{% url 'tareas' %}" class="btn btn-success">Volver a la lista de tareas</a>
+</div>
+{% endblock %}
