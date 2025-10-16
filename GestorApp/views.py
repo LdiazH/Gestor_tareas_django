@@ -32,7 +32,7 @@ class EliminarTarea(LoginRequiredMixin,UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         tarea = self.get_object()
-        return self.request.user == tarea.usuario
+        return self.request.user == tarea.usuario or self.request.user.is_superuser
     
     def handle_no_permission(self):
         # Redirige a un template de "No tienes permiso"
@@ -54,7 +54,7 @@ class AgregarTarea(LoginRequiredMixin, CreateView):
     login_url = 'login'
    
     def form_valid(self, form):
-        form.instance.usuario = self.request.user
+        form.instance.usuario = self.request.user or self.request.user.is_superuser
         return super().form_valid(form)
     
 class EditarTarea(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
@@ -66,7 +66,7 @@ class EditarTarea(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         tarea = self.get_object()
-        return self.request.user == tarea.usuario
+        return self.request.user == tarea.usuario or self.request.user.is_superuser
     def handle_no_permission(self):
         # Redirige a un template de "No tienes permiso"
         from django.shortcuts import render

@@ -2,7 +2,7 @@ from django import forms
 from .models import Tarea
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-
+#formularios utilizando modelform
 
 #Formularios de tareas
 
@@ -34,13 +34,17 @@ class TareaForm(forms.ModelForm):
                 'class': 'form-check-input',
             }),
         }
+     #convierte la primera palabra del titulo de la tarea en mayusculas   
+    def clean_titulo(self):
+        titulo = self.cleaned_data.get('titulo', '')
+        return titulo.capitalize() if titulo else titulo
 
 #Formulario resgistro de usuarios        
         
 class RegistroUsuario(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'password1', 'password2']  # solo usuario y contraseñas
+        fields = ['username', 'password1', 'password2']  
         labels = {
             'username': 'Nombre de usuario',
             'password1': 'Contraseña',
